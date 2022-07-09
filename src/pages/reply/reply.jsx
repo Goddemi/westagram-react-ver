@@ -12,8 +12,7 @@ const Reply = () => {
   const windowOutsideClickGoback = (e) => {
     e.target.className === "reply__page" && navigate(-1);
   };
-
-  const addReplyInput = (e) => {
+  const addReplyInputToInputArray = (e) => {
     e.preventDefault();
     const newReplyInputArray = [...replyInputArray];
     newReplyInputArray.push(replyInputValue);
@@ -72,7 +71,7 @@ const Reply = () => {
           <form
             className="reply__form"
             onSubmit={(e) => {
-              addReplyInput(e);
+              addReplyInputToInputArray(e);
             }}
           >
             <i className="fa-regular fa-face-angry"></i>

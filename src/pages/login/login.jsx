@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./login.scss";
 
 const Login = () => {
@@ -8,6 +9,22 @@ const Login = () => {
   const [loginId, setLoginId] = useState("");
   const [loginPwd, setLoginPwd] = useState("");
   const navigate = useNavigate();
+  const [imgFadeInOutBtn, setImgFadeInOutBtn] = useState(true);
+
+  function imgFadeInOut() {
+    imgFadeInOutBtn === true
+      ? setImgFadeInOutBtn(() => {
+          return false;
+        })
+      : setImgFadeInOutBtn(() => {
+          return true;
+        });
+  }
+
+  useInterval(() => {
+    imgFadeInOut();
+  }, 3000);
+
   return (
     <>
       <div className="login__page">
@@ -15,8 +32,16 @@ const Login = () => {
           <section className="main__section">
             <section className="left__section">
               <div className="img__backside"></div>
-              <div className="img__willChange hidden"></div>
-              <div className="img__willChange2"></div>
+              <div
+                className={`img__willChange ${
+                  imgFadeInOutBtn === true ? "hidden" : " "
+                } `}
+              ></div>
+              <div
+                className={`img__willChange2 ${
+                  imgFadeInOutBtn === true ? " " : "hidden"
+                }`}
+              ></div>
               <div className="img__frontFrame"></div>
             </section>
 
@@ -129,4 +154,23 @@ const Login = () => {
   );
 };
 
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 export default Login;
