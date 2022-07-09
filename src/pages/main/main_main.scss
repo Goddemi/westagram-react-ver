@@ -1,0 +1,63 @@
+
+/* main */
+
+.horizontal__line {
+    margin: auto;
+    border-bottom: var(--border);
+    width: 90%;
+    max-width: 900px;
+}
+
+.user__capacity--query {
+    display: none;
+}
+
+.main__page {
+
+    .main__main {
+
+        background-color: var(--gray);
+        margin: 20px;
+    }
+
+    .menu {
+        margin: 20px 0;
+        @include flexCenter();
+
+        span {
+            margin: 0 50px;
+            font-size: var(--normalsize);
+            color: gray;
+            cursor: pointer;
+
+            &:hover {
+
+                color: black;
+            }
+        }
+
+    }
+
+    .postings {
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        width: 100%;
+        max-width: 950px;
+
+        .post {
+            width: 30%;
+            height: 30%;
+            max-width: 290px;
+            max-height: 285px;
+            object-fit: contain;
+            margin: 10px;
+            cursor: pointer;
+
+        }
+
+    }
+
+}
