@@ -1,23 +1,23 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./login.scss";
-import { Routes, Route, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const regEx_email =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
   const [loginId, setLoginId] = useState("");
   const [loginPwd, setLoginPwd] = useState("");
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <>
       <div className="login__page">
         <main className="login__main">
           <section className="main__section">
             <section className="left__section">
-              <div className="imgs__back"></div>
-              <div className="img__copy1 hidden"></div>
-              <div className="img__copy2"></div>
-              <div className="imgs"></div>
+              <div className="img__backside"></div>
+              <div className="img__willChange hidden"></div>
+              <div className="img__willChange2"></div>
+              <div className="img__frontFrame"></div>
             </section>
 
             <section className="right__section">
@@ -63,7 +63,7 @@ const Login = () => {
                   <hr color="#fafafa"></hr>
                 </div>
                 <div className="login__option">
-                  <div className="facebook__login">
+                  <div className="login__facebook">
                     <i className="fa-brands fa-facebook-square"></i>
                     Facebook으로 로그인
                   </div>
@@ -71,22 +71,22 @@ const Login = () => {
                 </div>
               </div>
 
-              <div className="signin__box">
+              <div className="box__signin">
                 계정이 없으신가요?
                 <a href="https://www.instagram.com/accounts/emailsignup/">
                   가입하기
                 </a>
               </div>
 
-              <div className="download__box">
+              <div className="box__download">
                 <span>앱을 다운로드 하세요</span>
 
                 <div className="download__twoboxes">
-                  <div className="apple__download">
+                  <div className="download__apple">
                     <i className="fa-brands fa-apple"></i>
                     Apple 다운로드
                   </div>
-                  <div className="android__download">
+                  <div className="download__android">
                     <i className="fa-brands fa-google-play"></i>
                     Androi 다운로드
                   </div>

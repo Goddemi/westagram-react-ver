@@ -6,11 +6,19 @@ import ProfileImg from "../../components/profile_img";
 const Reply = () => {
   let id = useParams();
   const navigate = useNavigate();
-  const [replyInputValue, replyInputChange] = useState("");
-  const [replyInputArray, replyInputArrayChange] = useState([]);
+  const [replyInputValue, setReplyInput] = useState("");
+  const [replyInputArray, setReplyInputArray] = useState([]);
 
   const windowOutsideClickGoback = (e) => {
     e.target.className === "reply__page" && navigate(-1);
+  };
+
+  const addReplyInput = (e) => {
+    e.preventDefault();
+    const newReplyInputArray = [...replyInputArray];
+    newReplyInputArray.push(replyInputValue);
+    setReplyInputArray(newReplyInputArray);
+    setReplyInput("");
   };
 
   return (
@@ -44,6 +52,7 @@ const Reply = () => {
           </ul>
 
           <div className="horizontal__line"></div>
+
           <div className="function__bar">
             <div className="functions">
               <div className="function__left">
@@ -63,11 +72,7 @@ const Reply = () => {
           <form
             className="reply__form"
             onSubmit={(e) => {
-              e.preventDefault();
-              const newReplyInputArray = [...replyInputArray];
-              newReplyInputArray.push(replyInputValue);
-              replyInputArrayChange(newReplyInputArray);
-              replyInputChange("");
+              addReplyInput(e);
             }}
           >
             <i className="fa-regular fa-face-angry"></i>
@@ -76,7 +81,7 @@ const Reply = () => {
               placeholder="댓글 달기..."
               value={replyInputValue}
               onChange={(e) => {
-                replyInputChange(e.target.value);
+                setReplyInput(e.target.value);
               }}
             />
             <button>게시</button>
@@ -89,17 +94,31 @@ const Reply = () => {
 
 function SetReply(props) {
   let [heartSwitch, heartSwitchChange] = useState(true);
-  let [goodCount, goodCountChange] = useState([]);
+  let [goodCountArray, setGoodCountArray] = useState([]);
+
+  const goodCountArrayPushing = () => {
+    const goodCountbase = [...goodCountArray];
+    goodCountbase.push(0);
+    setGoodCountArray(goodCountbase);
+  };
+  const goodCountArrayPoping = () => {
+    const goodCountbase = [...goodCountArray];
+    goodCountbase.pop();
+    setGoodCountArray(goodCountbase);
+  };
+  const goodCountPlusMinus = (number) => {
+    const newGoodCount = [...goodCountArray];
+    newGoodCount[props.index] = goodCountArray[props.index] + number;
+    setGoodCountArray(newGoodCount);
+  };
+  const removeReply = (e) => {
+    e.target.parentElement.remove();
+  };
 
   useEffect(() => {
-    const goodCountbase = [...goodCount];
-    goodCountbase.push(0);
-    goodCountChange(goodCountbase);
-
+    goodCountArrayPushing();
     return () => {
-      const goodCountbase = [...goodCount];
-      goodCountbase.pop();
-      goodCountChange(goodCountbase);
+      goodCountArrayPoping();
     };
   });
 
@@ -115,38 +134,34 @@ function SetReply(props) {
           <div className="my__status">
             <span className="my__likes">
               좋아요
-              <span className="likes__count--up">{goodCount[props.index]}</span>
+              <span className="likes__count--up">
+                &nbsp;{goodCountArray[props.index]}
+              </span>
               개
-              {/* 이 컴포넌트가 생성될때마다 goodCount[0], goodCount[1]이 생겨난다. 라고 생각햇는데 직접 콘솔로그로 찍어보니 안나온다..
-              이게 아니지만 이걸로 일단 외우자.  */}
             </span>
             <span>답글달기</span>
           </div>
         </div>
         <i
-          className="fa-regular fa-heart heart__likes"
+          className="heart__button fa-regular fa-heart"
           onClick={() => {
-            const newGoodCount = [...goodCount];
-            newGoodCount[props.index] = goodCount[props.index] + 1;
-            goodCountChange(newGoodCount);
+            goodCountPlusMinus(1);
             heartSwitchChange(false);
           }}
           style={{ display: heartSwitch === true ? "inline" : "none" }}
         ></i>
         <i
-          className="fa-solid fa-heart heart__likes--active"
+          className="heart__button--active fa-solid fa-heart"
           onClick={() => {
-            const newGoodCount = [...goodCount];
-            newGoodCount[props.index] = goodCount[props.index] - 1;
-            goodCountChange(newGoodCount);
+            goodCountPlusMinus(-1);
             heartSwitchChange(true);
           }}
           style={{ display: heartSwitch === true ? "none" : "inline" }}
         ></i>
         <i
-          className="fa-solid fa-xmark xmark"
+          className="xmark fa-solid fa-xmark"
           onClick={(e) => {
-            e.target.parentElement.remove();
+            removeReply(e);
           }}
         ></i>
       </li>

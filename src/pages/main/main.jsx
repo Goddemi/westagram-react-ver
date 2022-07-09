@@ -22,11 +22,13 @@ const Main = () => {
           <i className="fa-regular fa-compass"></i>
           <div className="heart">
             <i className="fa-regular fa-heart"></i>
-            <div></div>
+            <div className="red__dot"></div>
           </div>
           <i className="fa-regular fa-user"></i>
         </div>
       </nav>
+
+      {/* 구현해야함. Container */}
 
       <div className="search__list--container hidden">
         <div className="search__bar--list">
@@ -107,20 +109,13 @@ const Main = () => {
       </header>
 
       <div className="horizontal__line"></div>
+
       <div className="user__capacity--query">
-        <div className="user__capacity--list">
-          <span>게시물</span>
-          <span>7,305</span>
-        </div>
-        <div className="user__capacity--list">
-          <span>팔로워</span>
-          <span>245M</span>
-        </div>
-        <div className="user__capacity--list">
-          <span>팔로우</span>
-          <span>712</span>
-        </div>
+        <UserCapacity type={"게시물"} number={(7, 305)} />
+        <UserCapacity type={"팔로워"} number={"245M"} />
+        <UserCapacity type={"팔로우"} number={712} />
       </div>
+
       <div className="horizontal__line"></div>
 
       <main className="main__main">
@@ -161,6 +156,15 @@ function ImgAdding(props) {
         props.navigate("./reply/" + props.id);
       }}
     />
+  );
+}
+
+function UserCapacity(props) {
+  return (
+    <div className="user__capacity--list">
+      <span>{props.type}</span>
+      <span>{props.number}</span>
+    </div>
   );
 }
 
