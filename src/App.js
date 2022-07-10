@@ -3,8 +3,7 @@ import Login from "./pages/login/login";
 import Main from "./pages/main/main";
 import Reply from "./pages/reply/reply";
 
-//아래 라우터 자체도 Data + Map 을 통해서 동적으로 생성 될 수 있도록.
-//data값에 UseState로 줘야 하는 이유.
+//useParams 이용해서 Reply에서 받고 리플라이에 자료 전달해줘야함.
 
 function App() {
   return (

@@ -107,7 +107,6 @@ function SetReply(props) {
     goodCountbase.push(0);
     props.setGoodCountArray(goodCountbase);
   };
-
   const goodCountArrayPoping = () => {
     const goodCountbase = [...props.goodCountArray];
     goodCountbase.pop();
@@ -124,7 +123,6 @@ function SetReply(props) {
 
   useEffect(() => {
     goodCountArrayPushing();
-
     return () => {
       goodCountArrayPoping();
     };
