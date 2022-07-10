@@ -8,6 +8,7 @@ const Reply = () => {
   const navigate = useNavigate();
   const [replyInputValue, setReplyInput] = useState("");
   const [replyInputArray, setReplyInputArray] = useState([]);
+  const [goodCountArray, setGoodCountArray] = useState([]);
 
   const windowOutsideClickGoback = (e) => {
     e.target.className === "reply__page" && navigate(-1);
@@ -45,7 +46,14 @@ const Reply = () => {
 
           <ul className="reply__window">
             {replyInputArray.map((data, i) => {
-              return <SetReply data={data} index={i} />;
+              return (
+                <SetReply
+                  data={data}
+                  index={i}
+                  goodCountArray={goodCountArray}
+                  setGoodCountArray={setGoodCountArray}
+                />
+              );
             })}
           </ul>
 
@@ -93,22 +101,22 @@ const Reply = () => {
 
 function SetReply(props) {
   let [heartColorSwitch, setHeartColorSwitch] = useState(true);
-  let [goodCountArray, setGoodCountArray] = useState([]);
 
   const goodCountArrayPushing = () => {
-    const goodCountbase = [...goodCountArray];
+    const goodCountbase = [...props.goodCountArray];
     goodCountbase.push(0);
-    setGoodCountArray(goodCountbase);
+    props.setGoodCountArray(goodCountbase);
   };
+
   const goodCountArrayPoping = () => {
-    const goodCountbase = [...goodCountArray];
+    const goodCountbase = [...props.goodCountArray];
     goodCountbase.pop();
-    setGoodCountArray(goodCountbase);
+    props.setGoodCountArray(goodCountbase);
   };
   const goodCountPlusMinus = (number) => {
-    const newGoodCount = [...goodCountArray];
-    newGoodCount[props.index] = goodCountArray[props.index] + number;
-    setGoodCountArray(newGoodCount);
+    const newGoodCount = [...props.goodCountArray];
+    newGoodCount[props.index] = props.goodCountArray[props.index] + number;
+    props.setGoodCountArray(newGoodCount);
   };
   const removeReply = (e) => {
     e.target.parentElement.remove();
@@ -116,10 +124,11 @@ function SetReply(props) {
 
   useEffect(() => {
     goodCountArrayPushing();
+
     return () => {
       goodCountArrayPoping();
     };
-  });
+  }, []);
 
   return (
     <>
@@ -134,7 +143,7 @@ function SetReply(props) {
             <span className="my__likes">
               좋아요
               <span className="likes__count--up">
-                &nbsp;{goodCountArray[props.index]}
+                &nbsp;{props.goodCountArray[props.index]}
               </span>
               개
             </span>
