@@ -34,7 +34,6 @@ const Reply = () => {
             backgroundImage: `url(/imgs/${id[0]}.jpg)`,
           }}
         ></section>
-
         <section className="section__right">
           <div className="user__bar">
             <ProfileImg content={"팔로우"} />
@@ -76,6 +75,7 @@ const Reply = () => {
           >
             <i className="fa-regular fa-face-angry"></i>
             <input
+              required
               type="text"
               placeholder="댓글 달기..."
               value={replyInputValue}
@@ -92,7 +92,7 @@ const Reply = () => {
 };
 
 function SetReply(props) {
-  let [heartSwitch, heartSwitchChange] = useState(true);
+  let [heartColorSwitch, setHeartColorSwitch] = useState(true);
   let [goodCountArray, setGoodCountArray] = useState([]);
 
   const goodCountArrayPushing = () => {
@@ -145,17 +145,17 @@ function SetReply(props) {
           className="heart__button fa-regular fa-heart"
           onClick={() => {
             goodCountPlusMinus(1);
-            heartSwitchChange(false);
+            setHeartColorSwitch(false);
           }}
-          style={{ display: heartSwitch === true ? "inline" : "none" }}
+          style={{ display: heartColorSwitch === true ? "inline" : "none" }}
         ></i>
         <i
           className="heart__button--active fa-solid fa-heart"
           onClick={() => {
             goodCountPlusMinus(-1);
-            heartSwitchChange(true);
+            setHeartColorSwitch(true);
           }}
-          style={{ display: heartSwitch === true ? "none" : "inline" }}
+          style={{ display: heartColorSwitch === true ? "none" : "inline" }}
         ></i>
         <i
           className="xmark fa-solid fa-xmark"
