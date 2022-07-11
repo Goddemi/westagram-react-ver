@@ -8,7 +8,7 @@ const Reply = () => {
   const navigate = useNavigate();
   const [replyInputValue, setReplyInput] = useState("");
   const [replyInputArray, setReplyInputArray] = useState([]);
-  const [goodCountArray, setGoodCountArray] = useState([]);
+  const [goodCountArray, setGoodCountArray] = useState([0]);
 
   const windowOutsideClickGoback = (e) => {
     e.target.className === "reply__page" && navigate(-1);
@@ -106,10 +106,11 @@ function SetReply(props) {
     const goodCountbase = [...props.goodCountArray];
     goodCountbase.push(0);
     props.setGoodCountArray(goodCountbase);
+    console.log(props.goodCountArray);
   };
   const goodCountArrayPoping = () => {
     const goodCountbase = [...props.goodCountArray];
-    goodCountbase.pop();
+    goodCountbase.splice(props.index, 1, null);
     props.setGoodCountArray(goodCountbase);
   };
   const goodCountPlusMinus = (number) => {
@@ -123,9 +124,7 @@ function SetReply(props) {
 
   useEffect(() => {
     goodCountArrayPushing();
-    return () => {
-      goodCountArrayPoping();
-    };
+    return () => {};
   }, []);
 
   return (
@@ -168,6 +167,8 @@ function SetReply(props) {
           className="xmark fa-solid fa-xmark"
           onClick={(e) => {
             removeReply(e);
+            goodCountArrayPoping();
+            console.log(props.goodCountArray);
           }}
         ></i>
       </li>
